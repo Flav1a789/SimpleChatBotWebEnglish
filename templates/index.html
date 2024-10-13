@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
+    <style>
+        body{
+    font-family: monospace;
+        }
+
+        #chatbox{
+        margin-left: auto;
+        margin-right: auto;
+        width: 40%;
+        margin-top: 50px
+        }
+
+        .botText{
+            font-family: monospace;
+            font-size: 17px;
+            text-align: left;
+            line-height: 27px;
+            color: blue;
+        }
+
+        #userInput{
+        margin-left: auto;
+        margin-right: auto;
+        width: 40%;
+        margin-top: 50px
+        }
+
+        #textInput{
+            border-bottom: 3px solid #657886;
+            font-family: monospace;
+            font-size: 16px;       
+        }
+
+        #buttonInput{
+            padding: 10px;
+            font-family: monospace;
+            font-size: 16px;
+
+        }
+
+    h1{
+        text-align: center;
+    }
+
+    .userText{
+        text-align: right;
+    }
+    </style>
+
+</head>
+<body>
+    
+    <h1> EU chat bot information</h1>
+    <div id = 'chatbox'> 
+        <p class="botText"><span>Hi dear EU citizen! What is your question?</span></p>
+        <div id = 'userInput'>
+            <input id = 'textInput' type = 'text' name ='userMessage' placeholder = 'Type your question'>
+            <input id = 'buttonInput' type = 'submit' value = 'Ask chatbot' />
+        </div>
+
+    </div>
+    <script>
+        function getUserResponse(){
+            var userText = $('#textInput').val(); 
+
+            var userHTML = "<p class = 'userText'>User: <span>"+userText+"</span></p>";
+            //Inject text and not keep text in the dialogue box
+            $('#textInput').val(""); 
+            $("#chatbox").append(userHTML);//pass userHTML in the container
+        
+
+   
+            document.getElementById("userInput").scrollIntoView({block: 'start', behaviour: 'smooth'})
+            
+            //send a request to send the etxt that h is gona type
+            s.get("/get", {userMessage:userText}).done(function(data){ //data is our chat response
+                var botHTML = "<p class = "botText">EULawChatbot<span>"+data+"</span></p>"//response from chatbot
+                $("#chatbox").append(botText) ;//I will pass the pass the botHTML that containns the data as well as the tags 
+            });
+             
+            }
+            $('#textInput').keypress(function(e){
+                if(e.which == 13){ 
+                    getUserResponse();
+                }
+            });
+
+            $('#buttoInput').click(function(){
+                getUserResponse();
+            });
+
+
+    </script>
+
+
+
+
+</body>
+</html>
